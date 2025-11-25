@@ -19,6 +19,17 @@ import {
   IonSearchbar,
   IonIcon
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { 
+  search, 
+  qrCode, 
+  shieldCheckmark, 
+  phonePortrait,
+  refresh,
+  location,
+  call,
+  mail
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -47,7 +58,17 @@ import {
   ]
 })
 export class HomePage {
-  // Por ahora este componente es principalmente visual.
-  // Cuando quieras trasladar la lógica (filtros, carga real de eventos,
-  // autenticación) lo hacemos como servicios y modales de Ionic.
+  constructor() {
+    // Registrar todos los iconos que vas a usar
+    addIcons({
+      search,
+      'qr-code': qrCode,
+      'shield-checkmark': shieldCheckmark,
+      'phone-portrait': phonePortrait,
+      refresh,
+      location,
+      call,
+      mail
+    });
+  }
 }
