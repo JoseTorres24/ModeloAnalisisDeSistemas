@@ -1,0 +1,7 @@
+{
+  "name": "ModelosAnalisis",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
