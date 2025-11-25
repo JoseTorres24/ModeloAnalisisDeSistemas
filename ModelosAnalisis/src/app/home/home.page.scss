@@ -149,10 +149,28 @@
   color: var(--ion-color-medium);
 }
 
-/* Footer */
+
+/* Footer CORREGIDO */
 .footer {
-  --background: var(--uanl-blue);
-  color: #fff;
+  background: var(--uanl-blue) !important;
+  color: white !important;
+}
+
+.footer ion-toolbar {
+  --background: var(--uanl-blue) !important;
+  background: var(--uanl-blue) !important;
+  color: white !important;
+}
+
+.footer h5 {
+  color: var(--uanl-gold) !important;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.footer p {
+  color: rgba(255, 255, 255, 0.8) !important;
+  line-height: 1.5;
 }
 
 .footer-links {
@@ -166,13 +184,16 @@
 }
 
 .footer-links a {
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8) !important;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  display: block;
+  padding: 0.25rem 0;
 }
 
 .footer-links a:hover {
-  color: #fff;
+  color: var(--uanl-gold) !important;
+  transform: translateX(5px);
 }
 
 .footer-contact {
@@ -183,23 +204,28 @@
 
 .footer-contact li {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 0.75rem;
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.9) !important;
+  line-height: 1.4;
 }
 
 .footer-contact ion-icon {
   margin-right: 0.5rem;
+  margin-top: 0.125rem;
   font-size: 1.1rem;
+  color: var(--uanl-gold) !important;
+  flex-shrink: 0;
 }
 
 .footer-contact a {
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.9) !important;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .footer-contact a:hover {
-  color: #fff;
+  color: var(--uanl-gold) !important;
 }
 
 .security-badge {
@@ -207,21 +233,47 @@
   align-items: center;
   margin-top: 1rem;
   font-size: 0.875rem;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8) !important;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  border-left: 3px solid var(--uanl-gold);
 }
 
 .security-badge ion-icon {
   margin-right: 0.5rem;
+  font-size: 1rem;
+  color: var(--uanl-gold) !important;
 }
 
 .copyright {
   margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.7);
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.7) !important;
   font-size: 0.875rem;
+  text-align: center;
 }
 
+/* Responsive Design para Footer */
+@media (max-width: 767px) {
+  .footer {
+    text-align: center;
+  }
+  
+  .footer-contact li {
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .security-badge {
+    justify-content: center;
+  }
+  
+  .footer-links a:hover {
+    transform: none;
+  }
+}
 /* Features Section */
 .features-section {
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
