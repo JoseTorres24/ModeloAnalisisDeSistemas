@@ -1,0 +1,6 @@
+{
+  "extends": ["html-validate:standard"],
+  "rules": {
+    "attr-case": "off"
+  }
+}

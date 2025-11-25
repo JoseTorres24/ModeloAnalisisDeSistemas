@@ -1,20 +1,249 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>Eventos UANL</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="home-content">
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <!-- Indicador de tiempo real -->
+
+  <!-- HERO -->
+  <section class="hero-section text-center" role="region" aria-label="Hero">
+    <div class="hero-inner">
+      <h1 class="hero-title">Sistema Integral de Gestión de Eventos UANL</h1>
+      <p class="hero-subtitle">Plataforma unificada para descubrir, registrar y administrar eventos universitarios</p>
+      <div class="ion-text-center ion-margin-top">
+      <ion-button 
+        fill="outline" 
+        routerLink="/todos-eventos"
+        class="custom-btn modern-btn">
+        Ver Todos los Eventos y Registrarse
+      </ion-button>
+</div>
+    </div>
+  </section>
+
+ <!-- Features -->
+<section class="py-5 features-section" role="region" aria-label="Características">
+  <div class="container-ion">
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title">Características Principales</h2>
+      <p class="section-subtitle">Descubre todo lo que nuestro sistema ofrece para tu experiencia universitaria</p>
+    </div>
+    
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-md="6" size-lg="3" class="mb-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+            </div>
+            <h3 class="feature-title">Búsqueda Avanzada</h3>
+            <p class="feature-description">Filtra eventos por tipo, fecha, dependencia y más criterios específicos</p>
+            <div class="feature-hover-effect"></div>
+          </div>
+        </ion-col>
+
+        <ion-col size="12" size-md="6" size-lg="3" class="mb-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <ion-icon name="qr-code-outline" aria-hidden="true"></ion-icon>
+            </div>
+            <h3 class="feature-title">Boletos Digitales</h3>
+            <p class="feature-description">Recibe tu boleto con código QR único al instante después del registro</p>
+            <div class="feature-hover-effect"></div>
+          </div>
+        </ion-col>
+
+        <ion-col size="12" size-md="6" size-lg="3" class="mb-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <ion-icon name="shield-checkmark-outline" aria-hidden="true"></ion-icon>
+            </div>
+            <h3 class="feature-title">Pagos Seguros</h3>
+            <p class="feature-description">Pasarelas de pago certificadas PCI DSS para transacciones protegidas</p>
+            <div class="feature-hover-effect"></div>
+          </div>
+        </ion-col>
+
+        <ion-col size="12" size-md="6" size-lg="3" class="mb-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <ion-icon name="phone-portrait-outline" aria-hidden="true"></ion-icon>
+            </div>
+            <h3 class="feature-title">App Integrada</h3>
+            <p class="feature-description">Totalmente sincronizado con la aplicación oficial UANL</p>
+            <div class="feature-hover-effect"></div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
+</section>
+
+  <!-- Eventos Destacados -->
+  <section id="eventos" class="py-5 bg-light events-section" role="region" aria-label="Eventos destacados">
+    <div class="container-ion">
+      <h2 class="text-center mb-4">Eventos Destacados</h2>
+
+      <!-- Filtros -->
+      <div class="filters-row">
+        <div class="btn-group flex-wrap" role="group" aria-label="Filtros por tipo">
+          <ion-button fill="outline" size="small" class="active">Todos</ion-button>
+          <ion-button fill="outline" size="small">Académicos</ion-button>
+          <ion-button fill="outline" size="small">Culturales</ion-button>
+          <ion-button fill="outline" size="small">Deportivos</ion-button>
+          <ion-button fill="outline" size="small">Con Pago</ion-button>
+          <ion-button fill="outline" size="small">Gratuitos</ion-button>
+        </div>
+
+        <div class="search-group">
+          <ion-searchbar placeholder="Buscar eventos..." show-cancel-button="never"></ion-searchbar>
+        </div>
+      </div>
+
+      <!-- Lista de eventos -->
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-md="4" class="mb-3">
+            <ion-card class="event-card">
+              <img src="/ModelosAnalisis/src/assets/congreso-computacion.jpg" alt="Congreso de Ciencias Computacionales"
+                class="event-image" />
+              <ion-card-header>
+                <ion-badge class="category-badge">Académico</ion-badge>
+                <ion-card-title>Congreso de Ciencias Computacionales</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <p>Evento académico para estudiantes de computación.</p>
+                <div class="meta">
+                  <small class="text-muted">15 Nov 2023</small>
+                  <ion-badge color="success">Gratuito</ion-badge>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <ion-col size="12" size-md="4" class="mb-3">
+            <ion-card class="event-card">
+              <img src="/ModelosAnalisis/src/assets/danza-folklorica.jpg" alt="Festival de Danza Folklórica"
+                class="event-image" />
+              <ion-card-header>
+                <ion-badge color="success">Cultural</ion-badge>
+                <ion-card-title>Festival de Danza Folklórica</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <p>Presentación de grupos estudiantiles de danza.</p>
+                <div class="meta">
+                  <small class="text-muted">18 Nov 2023</small>
+                  <ion-badge color="warning">$50</ion-badge>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <ion-col size="12" size-md="4" class="mb-3">
+            <ion-card class="event-card">
+              <img src="/ModelosAnalisis/src/assets/torneo-futbol.jpg" alt="Torneo Interfacultades de Fútbol"
+                class="event-image" />
+              <ion-card-header>
+                <ion-badge color="tertiary">Deportivo</ion-badge>
+                <ion-card-title>Torneo Interfacultades de Fútbol</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <p>Competencia deportiva entre facultades.</p>
+                <div class="meta">
+                  <small class="text-muted">22 Nov 2023</small>
+                  <ion-badge color="success">Gratuito</ion-badge>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <!-- no se centra el boton verificar!-->
+    </div>
+  </section>
+
+  <!-- Sección QR -->
+  <section class="py-5 qr-section" role="region" aria-label="Control de asistencia con QR">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="12" size-md="6">
+          <h3>Control de Asistencia con QR</h3>
+          <p>Al registrarte en un evento, recibirás un boleto digital con código QR único para el control de asistencia.
+          </p>
+          <ul>
+            <li>Registro instantáneo de asistencia</li>
+            <li>Válido solo para el evento específico</li>
+            <li>Enviado directamente a tu correo</li>
+          </ul>
+        </ion-col>
+        <ion-col size="12" size-md="6" class="text-center">
+          <div class="qr-code" aria-hidden="true">
+            <ion-icon name="qr-code-outline"></ion-icon>
+          </div>
+          <p class="qr-description">Ejemplo de boleto digital QR</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+  <!-- Footer -->
+  <ion-footer class="footer" role="contentinfo">
+    <ion-toolbar>
+      <div class="container-ion">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-md="4">
+              <h5>Eventos UANL</h5>
+              <p>Sistema integral de gestión de eventos de la Universidad Autónoma de Nuevo León</p>
+              <div class="security-badge">
+                <ion-icon name="shield-checkmark-outline"></ion-icon> Protegido por SSL/TLS
+              </div>
+            </ion-col>
+
+            <ion-col size="12" size-md="2">
+              <h5>Enlaces</h5>
+              <ul class="footer-links">
+                <li><a routerLink="/">Inicio</a></li>
+                <li><a routerLink="/todos-eventos">Eventos</a></li>
+                <li><a routerLink="/calendario">Calendario</a></li>
+              </ul>
+            </ion-col>
+
+            <ion-col size="12" size-md="3">
+              <h5>Organizadores</h5>
+              <ul class="footer-links">
+                <li><a routerLink="/organizadores">Panel de Control</a></li>
+                <li><a routerLink="/admin">Administración</a></li>
+              </ul>
+            </ion-col>
+
+            <ion-col size="12" size-md="3">
+              <h5>Contacto</h5>
+              <ul class="footer-contact">
+                <li>
+                  <ion-icon name="location-outline"></ion-icon>
+                  Av. Universidad, Ciudad Universitaria
+                </li>
+                <li>
+                  <ion-icon name="call-outline"></ion-icon>
+                  (81) 8329 4000
+                </li>
+                <li>
+                  <ion-icon name="mail-outline"></ion-icon>
+                  <a href="mailto:eventos@uanl.mx">eventos@uanl.mx</a>
+                </li>
+              </ul>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <div class="copyright text-center">
+          &copy; 2023 Universidad Autónoma de Nuevo León. Sistema certificado PCI DSS.
+        </div>
+      </div>
+    </ion-toolbar>
+  </ion-footer>
 </ion-content>
