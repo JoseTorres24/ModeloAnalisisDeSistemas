@@ -1,13 +1,295 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>todos-eventos</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">todos-eventos</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="events-catalog-content">
+  <!-- Header de Búsqueda -->
+  <section class="search-header-section">
+    <div class="container-ion">
+      <div class="search-header-content">
+        <div class="header-text">
+          <h1 class="page-title">Catálogo de Eventos UANL</h1>
+          <p class="page-subtitle">Descubre y regístrate en eventos de toda la universidad</p>
+        </div>
+        <div class="search-box">
+          <ion-searchbar 
+            placeholder="Buscar eventos..." 
+            (ionInput)="handleSearch($event)"
+            class="custom-searchbar">
+          </ion-searchbar>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container-ion py-4">
+    <div class="catalog-layout">
+      <!-- Sidebar de Filtros -->
+      <div class="filters-sidebar">
+        <div class="filters-card">
+          <div class="filters-header">
+            <ion-icon name="filter-outline"></ion-icon>
+            <h3>Filtros de Búsqueda</h3>
+          </div>
+
+          <!-- Búsqueda por texto -->
+          <div class="filter-group">
+            <label class="filter-label">Palabras clave</label>
+            <ion-input 
+              type="text" 
+              placeholder="Nombre del evento..."
+              (ionInput)="onKeywordChange($event)"
+              class="custom-input">
+            </ion-input>
+          </div>
+          
+          <!-- Filtro por categoría -->
+          <div class="filter-group">
+            <label class="filter-label">Categoría</label>
+            <div class="checkboxes-group">
+              <ion-item lines="none">
+                <ion-checkbox slot="start" [(ngModel)]="filters.categories.academico" (ionChange)="applyFilters()"></ion-checkbox>
+                <ion-label>Académicos</ion-label>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-checkbox slot="start" [(ngModel)]="filters.categories.cultural" (ionChange)="applyFilters()"></ion-checkbox>
+                <ion-label>Culturales</ion-label>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-checkbox slot="start" [(ngModel)]="filters.categories.deportivo" (ionChange)="applyFilters()"></ion-checkbox>
+                <ion-label>Deportivos</ion-label>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-checkbox slot="start" [(ngModel)]="filters.categories.otros" (ionChange)="applyFilters()"></ion-checkbox>
+                <ion-label>Otros</ion-label>
+              </ion-item>
+            </div>
+          </div>
+          
+          <!-- Filtro por tipo de acceso -->
+          <div class="filter-group">
+            <label class="filter-label">Tipo de Acceso</label>
+            <div class="checkboxes-group">
+              <ion-item lines="none">
+                <ion-checkbox slot="start" [(ngModel)]="filters.access.todos" (ionChange)="applyFilters()"></ion-checkbox>
+                <ion-label>Para todos</ion-label>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-checkbox slot="start" [(ngModel)]="filters.access.estudiantes" (ionChange)="applyFilters()"></ion-checkbox>
+                <ion-label>Exclusivo UANL</ion-label>
+              </ion-item>
+            </div>
+          </div>
+          
+          <!-- Filtro por fecha -->
+          <div class="filter-group">
+            <label class="filter-label">Fecha</label>
+            <ion-select 
+              [(ngModel)]="filters.fecha" 
+              (ionChange)="applyFilters()"
+              placeholder="Todas las fechas"
+              class="custom-select">
+              <ion-select-option value="todas">Todas las fechas</ion-select-option>
+              <ion-select-option value="hoy">Hoy</ion-select-option>
+              <ion-select-option value="manana">Mañana</ion-select-option>
+              <ion-select-option value="semana">Esta semana</ion-select-option>
+              <ion-select-option value="mes">Este mes</ion-select-option>
+              <ion-select-option value="3meses">Próximos 3 meses</ion-select-option>
+            </ion-select>
+          </div>
+          
+          <!-- Filtro por dependencia -->
+          <div class="filter-group">
+            <label class="filter-label">Dependencia</label>
+            <ion-select 
+              [(ngModel)]="filters.dependencia" 
+              (ionChange)="applyFilters()"
+              placeholder="Todas las dependencias"
+              class="custom-select">
+              <ion-select-option value="todas">Todas las dependencias</ion-select-option>
+              <ion-select-option value="fcfm">FCFM</ion-select-option>
+              <ion-select-option value="medicina">Facultad de Medicina</ion-select-option>
+              <ion-select-option value="derecho">Facultad de Derecho</ion-select-option>
+              <ion-select-option value="mecanica">Facultad de Ingeniería Mecánica</ion-select-option>
+              <ion-select-option value="contaduria">Facultad de Contaduría</ion-select-option>
+              <ion-select-option value="musica">Facultad de Música</ion-select-option>
+            </ion-select>
+          </div>
+          
+          <!-- Filtro por costo -->
+          <div class="filter-group">
+            <label class="filter-label">Costo</label>
+            <div class="checkboxes-group">
+              <ion-item lines="none">
+                <ion-radio slot="start" value="todos" [(ngModel)]="filters.costo" (ionChange)="applyFilters()"></ion-radio>
+                <ion-label>Todos</ion-label>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-radio slot="start" value="gratuito" [(ngModel)]="filters.costo" (ionChange)="applyFilters()"></ion-radio>
+                <ion-label>Gratuitos</ion-label>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-radio slot="start" value="pago" [(ngModel)]="filters.costo" (ionChange)="applyFilters()"></ion-radio>
+                <ion-label>Con pago</ion-label>
+              </ion-item>
+            </div>
+          </div>
+          
+          <!-- Filtro por ubicación -->
+          <div class="filter-group">
+            <label class="filter-label">Ubicación</label>
+            <ion-select 
+              [(ngModel)]="filters.ubicacion" 
+              (ionChange)="applyFilters()"
+              placeholder="Todas las ubicaciones"
+              class="custom-select">
+              <ion-select-option value="todas">Todas las ubicaciones</ion-select-option>
+              <ion-select-option value="universitaria">Ciudad Universitaria</ion-select-option>
+              <ion-select-option value="mederos">Mederos</ion-select-option>
+              <ion-select-option value="salud">Ciudad Salud</ion-select-option>
+              <ion-select-option value="otro">Otro campus</ion-select-option>
+            </ion-select>
+          </div>
+          
+          <div class="filter-actions">
+            <ion-button expand="block" fill="solid" (click)="applyFilters()" class="apply-filters-btn">
+              <ion-icon name="funnel-outline" slot="start"></ion-icon>
+              Aplicar Filtros
+            </ion-button>
+            <ion-button expand="block" fill="outline" (click)="clearFilters()" class="clear-filters-btn">
+              <ion-icon name="refresh-outline" slot="start"></ion-icon>
+              Limpiar
+            </ion-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenido Principal - Grid de Eventos -->
+      <div class="events-content">
+        <div class="content-header">
+          <div class="header-info">
+            <h2 class="section-title">Eventos Disponibles</h2>
+            <p class="events-count" *ngIf="!loading">
+              {{ filteredEvents.length }} eventos encontrados
+            </p>
+            <p class="events-count" *ngIf="loading">
+              Cargando eventos...
+            </p>
+          </div>
+          <div class="sort-controls">
+            <ion-select 
+              [(ngModel)]="sortBy" 
+              (ionChange)="sortEvents()"
+              placeholder="Ordenar por"
+              class="sort-select">
+              <ion-select-option value="recientes">Más recientes</ion-select-option>
+              <ion-select-option value="proximos">Próximos a ocurrir</ion-select-option>
+              <ion-select-option value="populares">Más populares</ion-select-option>
+              <ion-select-option value="alfabetico">Alfabéticamente</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+
+        <!-- Grid de Eventos -->
+        <div class="events-grid" *ngIf="!loading && filteredEvents.length > 0">
+          <div class="event-card-container" *ngFor="let event of filteredEvents">
+            <ion-card class="event-card catalog-card" (click)="openEventDetails(event)">
+              <div class="card-image-container">
+                <img 
+                  src="event.image" 
+                  alt="event.title"
+                  class="event-image"
+                  (error)="handleImageError($event)" />
+                <div class="card-overlay">
+                  <ion-badge [class]="'event-category ' + event.category">
+                    {{ getCategoryText(event.category) }}
+                  </ion-badge>
+                  <div class="event-actions">
+                    <ion-button fill="clear" size="small" class="action-btn" (click)="$event.stopPropagation(); toggleFavorite(event)">
+                      <ion-icon 
+                        [name]="event.isFavorite ? 'heart' : 'heart-outline'" 
+                        [color]="event.isFavorite ? 'danger' : 'light'">
+                      </ion-icon>
+                    </ion-button>
+                  </div>
+                </div>
+                <div class="exclusive-badge" *ngIf="event.exclusivoUANL">
+                  <ion-badge color="warning">Exclusivo UANL</ion-badge>
+                </div>
+              </div>
+              
+              <ion-card-header>
+                <ion-card-title class="event-title">{{ event.title }}</ion-card-title>
+                <div class="event-meta">
+                  <div class="meta-item">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                    <span>{{ event.date }}</span>
+                  </div>
+                  <div class="meta-item">
+                    <ion-icon name="time-outline"></ion-icon>
+                    <span>{{ event.time }}</span>
+                  </div>
+                  <div class="meta-item">
+                    <ion-icon name="location-outline"></ion-icon>
+                    <span>{{ event.location }}</span>
+                  </div>
+                </div>
+              </ion-card-header>
+              
+              <ion-card-content>
+                <p class="event-description">{{ event.description }}</p>
+                
+                <div class="event-footer">
+                  <ion-badge [class]="'price-badge ' + (event.costo === 0 ? 'free' : 'paid')">
+                    {{ event.costo === 0 ? 'Gratuito' : (event.costo | currency:'MXN':'symbol':'1.2-2') }}
+                  </ion-badge>
+                  <div class="event-stats">
+                    <div class="stat-item">
+                      <ion-icon name="people-outline"></ion-icon>
+                      <span>{{ event.cupoDisponible }}/{{ event.cupoTotal }}</span>
+                    </div>
+                  </div>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
+
+        <!-- Estado vacío -->
+        <div class="empty-state" *ngIf="!loading && filteredEvents.length === 0">
+          <div class="empty-content">
+            <ion-icon name="calendar-outline" class="empty-icon"></ion-icon>
+            <h3>No se encontraron eventos</h3>
+            <p>Intenta ajustar los filtros o buscar con otras palabras clave</p>
+            <ion-button fill="outline" (click)="clearFilters()">
+              <ion-icon name="refresh-outline" slot="start"></ion-icon>
+              Mostrar todos los eventos
+            </ion-button>
+          </div>
+        </div>
+
+        <!-- Loading state -->
+        <div class="loading-state" *ngIf="loading">
+          <div class="loading-content">
+            <ion-spinner name="crescent"></ion-spinner>
+            <p>Cargando eventos...</p>
+          </div>
+        </div>
+
+        <!-- Paginación -->
+        <div class="pagination-container" *ngIf="filteredEvents.length > 0">
+          <ion-button fill="clear" [disabled]="currentPage === 1" (click)="previousPage()">
+            <ion-icon name="chevron-back-outline" slot="start"></ion-icon>
+            Anterior
+          </ion-button>
+          
+          <div class="page-indicator">
+            Página {{ currentPage }} de {{ totalPages }}
+          </div>
+          
+          <ion-button fill="clear" [disabled]="currentPage === totalPages" (click)="nextPage()">
+            Siguiente
+            <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>
