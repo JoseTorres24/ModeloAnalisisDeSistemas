@@ -1,3 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Catálogo de Eventos UANL</ion-title>
+    
+    <!-- Botones de autenticación en header -->
+    <ion-buttons slot="end">
+      <!-- Información del usuario logueado -->
+      <div class="user-info" *ngIf="currentUser">
+        <ion-chip [color]="currentUser.tipo === 'estudiante' ? 'primary' : 'secondary'">
+          <ion-avatar *ngIf="currentUser.tipo === 'estudiante'">
+            <ion-icon name="school-outline"></ion-icon>
+          </ion-avatar>
+          <ion-avatar *ngIf="currentUser.tipo === 'externo'">
+            <ion-icon name="person-outline"></ion-icon>
+          </ion-avatar>
+          <ion-label>{{ currentUser.tipo === 'estudiante' ? 'Estudiante' : 'Usuario' }}: {{ currentUser.nombre }}</ion-label>
+          <ion-icon name="log-out-outline" (click)="logout()"></ion-icon>
+        </ion-chip>
+      </div>
+
+      <!-- Botones de autenticación cuando no hay usuario -->
+      <div class="auth-buttons" *ngIf="!currentUser">
+        <ion-button fill="outline" size="small" (click)="openRegisterModal()" class="register-btn">
+          <ion-icon name="person-add-outline" slot="start"></ion-icon>
+          Registrarse
+        </ion-button>
+        <ion-button fill="outline" size="small" (click)="openLoginModal()" class="login-btn">
+          <ion-icon name="log-in-outline" slot="start"></ion-icon>
+          Iniciar Sesión
+        </ion-button>
+        <ion-button fill="solid" size="small" (click)="openUANLAuthModal()" class="uanl-auth-btn">
+          <ion-icon name="school-outline" slot="start"></ion-icon>
+          Autenticar UANL
+        </ion-button>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content [fullscreen]="true" class="events-catalog-content">
   <!-- Header de Búsqueda -->
@@ -28,7 +66,6 @@
             <ion-icon name="filter-outline"></ion-icon>
             <h3>Filtros de Búsqueda</h3>
           </div>
-
           <!-- Búsqueda por texto -->
           <div class="filter-group">
             <label class="filter-label">Palabras clave</label>
@@ -39,7 +76,7 @@
               class="custom-input">
             </ion-input>
           </div>
-          
+
           <!-- Filtro por categoría -->
           <div class="filter-group">
             <label class="filter-label">Categoría</label>
@@ -189,12 +226,12 @@
 
         <!-- Grid de Eventos -->
         <div class="events-grid" *ngIf="!loading && filteredEvents.length > 0">
-          <div class="event-card-container" *ngFor="let event of filteredEvents">
-            <ion-card class="event-card catalog-card" (click)="openEventDetails(event)">
+          <div class="event-card-container" *ngFor="let event of paginatedEvents">
+            <ion-card class="event-card catalog-card">
               <div class="card-image-container">
                 <img 
                   src="event.image" 
-                  alt="event.title"
+                  [alt]="event.title"
                   class="event-image"
                   (error)="handleImageError($event)" />
                 <div class="card-overlay">
@@ -202,16 +239,14 @@
                     {{ getCategoryText(event.category) }}
                   </ion-badge>
                   <div class="event-actions">
-                    <ion-button fill="clear" size="small" class="action-btn" (click)="$event.stopPropagation(); toggleFavorite(event)">
-                      <ion-icon 
-                        [name]="event.isFavorite ? 'heart' : 'heart-outline'" 
-                        [color]="event.isFavorite ? 'danger' : 'light'">
-                      </ion-icon>
-                    </ion-button>
+                
                   </div>
                 </div>
                 <div class="exclusive-badge" *ngIf="event.exclusivoUANL">
-                  <ion-badge color="warning">Exclusivo UANL</ion-badge>
+                  <ion-badge color="warning">
+                    <ion-icon name="school-outline" size="small"></ion-icon>
+                    Exclusivo UANL
+                  </ion-badge>
                 </div>
               </div>
               
@@ -247,12 +282,35 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- Botón de Registro -->
+                <div class="register-action">
+                    <!-- En tu event-card -->
+                    <ion-button 
+                      expand="block" 
+                      fill="solid" 
+                      [color]="event.exclusivoUANL ? 'warning' : 'primary'"
+                      (click)="handleEventRegistration(event)"
+                      [disabled]="event.cupoDisponible === 0">
+                      <ion-icon 
+                        [name]="event.exclusivoUANL ? 'school-outline' : 'calendar-outline'" 
+                        slot="start">
+                      </ion-icon>
+                      {{ event.cupoDisponible === 0 ? 'CUPO LLENO' : 'REGISTRARSE' }}
+                    </ion-button>
+                  
+                  <!-- Mensaje de exclusividad -->
+                  <div class="access-message" *ngIf="event.exclusivoUANL">
+                    <ion-icon name="information-circle-outline" color="warning"></ion-icon>
+                    <span>Evento exclusivo para estudiantes UANL</span>
+                  </div>
+                </div>
               </ion-card-content>
             </ion-card>
           </div>
         </div>
 
-        <!-- Estado vacío -->
+        <!-- Estados (vacío, loading, paginación) se mantienen igual -->
         <div class="empty-state" *ngIf="!loading && filteredEvents.length === 0">
           <div class="empty-content">
             <ion-icon name="calendar-outline" class="empty-icon"></ion-icon>
@@ -289,7 +347,428 @@
             <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
           </ion-button>
         </div>
+
       </div>
     </div>
   </div>
 </ion-content>
+
+<!-- Modal para requerir autenticación -->
+<ion-modal [isOpen]="showAuthRequiredModal" (didDismiss)="showAuthRequiredModal = false">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Autenticación Requerida</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="showAuthRequiredModal = false">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="modal-content">
+      <div class="auth-required-content">
+        <ion-icon name="lock-closed-outline" color="warning" class="auth-icon"></ion-icon>
+        <h2>Inicia sesión para continuar</h2>
+        <p>Necesitas autenticarte para registrarte en este evento.</p>
+        
+        <div class="auth-options">
+          <ion-button expand="block" fill="solid" (click)="openLoginModal(); showAuthRequiredModal = false">
+            <ion-icon name="log-in-outline" slot="start"></ion-icon>
+            Iniciar Sesión
+          </ion-button>
+          
+          <ion-button expand="block" fill="outline" (click)="openUANLAuthModal(); showAuthRequiredModal = false">
+            <ion-icon name="school-outline" slot="start"></ion-icon>
+            Autenticación UANL
+          </ion-button>
+          
+          <ion-button expand="block" fill="clear" (click)="openRegisterModal(); showAuthRequiredModal = false">
+            <ion-icon name="person-add-outline" slot="start"></ion-icon>
+            Crear Cuenta
+          </ion-button>
+        </div>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+
+
+<!-- Modal de Registro de Usuario Externo -->
+<ion-modal [isOpen]="showRegisterModal" (didDismiss)="showRegisterModal = false">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Registro - Usuario Externo</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="showRegisterModal = false">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="modal-content">
+      <form [formGroup]="registerForm" (ngSubmit)="registerUser()" class="auth-form">
+        <div class="form-header">
+          <ion-icon name="person-add-outline" color="primary"></ion-icon>
+          <h2>Crear Cuenta Externa</h2>
+          <p>Regístrate para participar en eventos abiertos al público</p>
+        </div>
+
+        <ion-item>
+          <ion-label position="stacked">Nombre completo</ion-label>
+          <ion-input 
+            formControlName="nombre" 
+            type="text" 
+            placeholder="Ingresa tu nombre">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Correo electrónico</ion-label>
+          <ion-input 
+            formControlName="email" 
+            type="email" 
+            placeholder="usuario@gmail.com">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Contraseña</ion-label>
+          <ion-input 
+            formControlName="password" 
+            type="password" 
+            placeholder="Mínimo 8 caracteres">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Confirmar contraseña</ion-label>
+          <ion-input 
+            formControlName="confirmPassword" 
+            type="password" 
+            placeholder="Repite tu contraseña">
+          </ion-input>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-checkbox formControlName="acceptTerms" slot="start"></ion-checkbox>
+          <ion-label class="terms-label">
+            Acepto los <a href="#">términos y condiciones</a>
+          </ion-label>
+        </ion-item>
+
+        <ion-button 
+          expand="block" 
+          type="submit" 
+          [disabled]="!registerForm.valid"
+          class="submit-btn">
+          <ion-icon name="person-add-outline" slot="start"></ion-icon>
+          Crear Cuenta
+        </ion-button>
+
+        <div class="auth-links">
+          <p>¿Ya tienes cuenta? 
+            <a (click)="switchToLogin()">Inicia sesión aquí</a>
+          </p>
+          <p>¿Eres estudiante UANL?
+            <a (click)="switchToUANLAuth()">Autentícate con tu cuenta institucional</a>
+          </p>
+        </div>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Modal de Login de Usuario Externo -->
+<ion-modal [isOpen]="showLoginModal" (didDismiss)="showLoginModal = false">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Iniciar Sesión - Usuario Externo</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="showLoginModal = false">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="modal-content">
+      <form [formGroup]="loginForm" (ngSubmit)="loginUser()" class="auth-form">
+        <div class="form-header">
+          <ion-icon name="log-in-outline" color="primary"></ion-icon>
+          <h2>Iniciar Sesión</h2>
+          <p>Accede con tu cuenta de usuario externo</p>
+        </div>
+
+        <ion-item>
+          <ion-label position="stacked">Correo electrónico</ion-label>
+          <ion-input formControlName="email" type="email" placeholder="usuario@gmail.com"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Contraseña</ion-label>
+          <ion-input formControlName="password" type="password" placeholder="Tu contraseña"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-checkbox formControlName="rememberMe" slot="start"></ion-checkbox>
+          <ion-label>Recordar sesión</ion-label>
+        </ion-item>
+
+        <ion-button 
+          expand="block" 
+          type="submit" 
+          [disabled]="!loginForm.valid"
+          class="submit-btn">
+          <ion-icon name="log-in-outline" slot="start"></ion-icon>
+          Iniciar Sesión
+        </ion-button>
+
+        <div class="auth-links">
+          <p><a href="#">¿Olvidaste tu contraseña?</a></p>
+          <p>¿No tienes cuenta? 
+            <a (click)="switchToRegister()">Regístrate aquí</a>
+          </p>
+          <p>¿Eres estudiante UANL?
+            <a (click)="switchToUANLAuthFromLogin()">Autentícate con tu cuenta institucional</a>
+          </p>
+        </div>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Modal de Autenticación UANL -->
+<ion-modal [isOpen]="showUANLAuthModal" (didDismiss)="showUANLAuthModal = false">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          <ion-icon name="school-outline" color="primary"></ion-icon>
+          Autenticación UANL
+        </ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="showUANLAuthModal = false">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="modal-content">
+      <form [formGroup]="uanlAuthForm" (ngSubmit)="authenticateUANL()" class="auth-form">
+        <div class="form-header uanl-header">
+          <ion-icon name="school-outline" color="warning"></ion-icon>
+          <h2>Acceso Comunidad UANL</h2>
+          <p>Usa tu cuenta institucional para acceder a eventos exclusivos</p>
+        </div>
+
+        <div class="uanl-badge">
+          <ion-badge color="warning">EXCLUSIVO ESTUDIANTES</ion-badge>
+        </div>
+
+        <ion-item>
+          <ion-label position="stacked">Correo Institucional</ion-label>
+          <ion-input formControlName="email" type="email" placeholder="matricula@uanl.edu.mx"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Contraseña UANL</ion-label>
+          <ion-input formControlName="password" type="password" placeholder="Tu contraseña institucional"></ion-input>
+        </ion-item>
+
+        <div class="demo-credentials">
+          <ion-accordion-group>
+            <ion-accordion value="demo">
+              <ion-item slot="header" color="light">
+                <ion-label>Credenciales de Prueba</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                <p><strong>Estudiante:</strong> estudiante@uanl.edu.mx / uanl123</p>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </div>
+
+        <ion-button 
+          expand="block" 
+          type="submit" 
+          [disabled]="!uanlAuthForm.valid"
+          color="warning"
+          class="submit-btn">
+          <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+          Autenticar con UANL
+        </ion-button>
+
+        <div class="auth-links">
+          <p>¿Eres usuario externo?
+            <a (click)="switchToLoginFromUANL()">Inicia sesión normal aquí</a>
+          </p>
+        </div>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Modal de Detalles del Evento -->
+<ion-modal [isOpen]="showEventDetailModal" (didDismiss)="showEventDetailModal = false">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Detalles del Evento</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="showEventDetailModal = false">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="modal-content" *ngIf="selectedEvent">
+      <div class="event-detail-content">
+        <div class="event-image-large">
+          <img src="selectedEvent.image" [alt]="selectedEvent.title">
+          <ion-badge [class]="'event-category-large ' + selectedEvent.category">
+            {{ getCategoryText(selectedEvent.category) }}
+          </ion-badge>
+          <ion-badge color="warning" *ngIf="selectedEvent.exclusivoUANL" class="exclusive-badge-large">
+            <ion-icon name="school-outline"></ion-icon>
+            EXCLUSIVO UANL
+          </ion-badge>
+        </div>
+
+        <div class="event-detail-info">
+          <h2>{{ selectedEvent.title }}</h2>
+          
+          <div class="detail-meta">
+            <div class="meta-item">
+              <ion-icon name="calendar-outline"></ion-icon>
+              <div>
+                <strong>Fecha:</strong>
+                <span>{{ selectedEvent.date }}</span>
+              </div>
+            </div>
+            <div class="meta-item">
+              <ion-icon name="time-outline"></ion-icon>
+              <div>
+                <strong>Hora:</strong>
+                <span>{{ selectedEvent.time }}</span>
+              </div>
+            </div>
+            <div class="meta-item">
+              <ion-icon name="location-outline"></ion-icon>
+              <div>
+                <strong>Lugar:</strong>
+                <span>{{ selectedEvent.location }}</span>
+              </div>
+            </div>
+            <div class="meta-item">
+              <ion-icon name="people-outline"></ion-icon>
+              <div>
+                <strong>Cupo:</strong>
+                <span>{{ selectedEvent.cupoDisponible }} / {{ selectedEvent.cupoTotal }} disponibles</span>
+              </div>
+            </div>
+            <div class="meta-item">
+              <ion-icon name="cash-outline"></ion-icon>
+              <div>
+                <strong>Costo:</strong>
+                <span class="price">{{ selectedEvent.costo === 0 ? 'GRATUITO' : (selectedEvent.costo | currency:'MXN':'symbol':'1.2-2') }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-description-full">
+            <h3>Descripción</h3>
+            <p>{{ selectedEvent.description }}</p>
+          </div>
+
+          <!-- Restricciones de acceso -->
+          <div class="access-restrictions" *ngIf="selectedEvent.exclusivoUANL">
+            <ion-alert color="warning">
+              <ion-icon name="school-outline" slot="start"></ion-icon>
+              <ion-label>
+                Este evento es exclusivo para estudiantes UANL. 
+                <span *ngIf="currentUser?.tipo !== 'estudiante'">
+                  Necesitas autenticarte como estudiante para registrarte.
+                </span>
+              </ion-label>
+            </ion-alert>
+          </div>
+
+          <div class="action-buttons">
+            <ion-button 
+              expand="block" 
+              fill="solid" 
+              [color]="selectedEvent.exclusivoUANL ? 'warning' : 'primary'"
+              (click)="confirmRegistration(selectedEvent)"
+              [disabled]="selectedEvent.cupoDisponible === 0">
+              <ion-icon 
+                [name]="selectedEvent.exclusivoUANL ? 'school-outline' : 'calendar-outline'" 
+                slot="start">
+              </ion-icon>
+              {{ selectedEvent.cupoDisponible === 0 ? 'CUPO LLENO' : 'CONFIRMAR REGISTRO' }}
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Modal de Registro Exitoso -->
+<ion-modal [isOpen]="showSuccessModal" (didDismiss)="showSuccessModal = false">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>¡Registro Exitoso!</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="modal-content success-content">
+      <div class="success-animation">
+        <ion-icon name="checkmark-circle" color="success"></ion-icon>
+      </div>
+      <h2>¡Te has registrado exitosamente!</h2>
+      <p>Has sido registrado en el evento <strong>"{{ selectedEvent?.title }}"</strong></p>
+      
+      <div class="success-details">
+        <ion-item lines="none">
+          <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
+          <ion-label>
+            <h3>Fecha del evento</h3>
+            <p>{{ selectedEvent?.date }} a las {{ selectedEvent?.time }}</p>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item lines="none">
+          <ion-icon name="location-outline" slot="start" color="primary"></ion-icon>
+          <ion-label>
+            <h3>Lugar</h3>
+            <p>{{ selectedEvent?.location }}</p>
+          </ion-label>
+        </ion-item>
+        
+        <!-- CORREGIR ESTA LÍNEA -->
+        <!-- Línea corregida -->
+        <ion-item lines="none" *ngIf="selectedEvent && selectedEvent.costo > 0">
+          <ion-icon name="card-outline" slot="start" color="primary"></ion-icon>
+          <ion-label>
+            <h3>Pago realizado</h3>
+            <p>{{ selectedEvent.costo | currency:'MXN':'symbol':'1.2-2' }}</p>
+          </ion-label>
+        </ion-item>
+      </div>
+
+      <div class="success-actions">
+        <ion-button expand="block" fill="solid" (click)="showSuccessModal = false">
+          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+          Entendido
+        </ion-button>
+        <ion-button expand="block" fill="outline">
+          <ion-icon name="download-outline" slot="start"></ion-icon>
+          Descargar Comprobante
+        </ion-button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
