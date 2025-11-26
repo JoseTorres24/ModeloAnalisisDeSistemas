@@ -76,111 +76,290 @@
   </div>
 </section>
 
-  <!-- Eventos Destacados -->
-  <section id="eventos" class="py-5 bg-light events-section" role="region" aria-label="Eventos destacados">
-    <div class="container-ion">
-      <h2 class="text-center mb-4">Eventos Destacados</h2>
+<!-- Eventos Destacados -->
+<section id="eventos" class="py-5 events-section" role="region" aria-label="Eventos destacados">
+  <div class="container-ion">
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title">Eventos Destacados</h2>
+      <p class="section-subtitle">Descubre los eventos más relevantes de la comunidad universitaria</p>
+    </div>
 
-      <!-- Filtros -->
+    <!-- Filtros Mejorados -->
+    <div class="filters-container">
       <div class="filters-row">
-        <div class="btn-group flex-wrap" role="group" aria-label="Filtros por tipo">
-          <ion-button fill="outline" size="small" class="active">Todos</ion-button>
-          <ion-button fill="outline" size="small">Académicos</ion-button>
-          <ion-button fill="outline" size="small">Culturales</ion-button>
-          <ion-button fill="outline" size="small">Deportivos</ion-button>
-          <ion-button fill="outline" size="small">Con Pago</ion-button>
-          <ion-button fill="outline" size="small">Gratuitos</ion-button>
+        <div class="filter-buttons">
+          <ion-button fill="outline" size="small" class="filter-btn active">
+            Todos
+          </ion-button>
+          <ion-button fill="outline" size="small" class="filter-btn">
+            Académicos
+          </ion-button>
+          <ion-button fill="outline" size="small" class="filter-btn">
+            Culturales
+          </ion-button>
+          <ion-button fill="outline" size="small" class="filter-btn">
+            Deportivos
+          </ion-button>
+          <ion-button fill="outline" size="small" class="filter-btn">
+            Con Pago
+          </ion-button>
+          <ion-button fill="outline" size="small" class="filter-btn">
+            Gratuitos
+          </ion-button>
         </div>
 
-        <div class="search-group">
-          <ion-searchbar placeholder="Buscar eventos..." show-cancel-button="never"></ion-searchbar>
+        <div class="search-container">
+          <ion-searchbar 
+            placeholder="Buscar eventos..." 
+            show-cancel-button="never"
+            class="custom-searchbar">
+          </ion-searchbar>
         </div>
       </div>
-
-      <!-- Lista de eventos -->
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12" size-md="4" class="mb-3">
-            <ion-card class="event-card">
-              <img src="/ModelosAnalisis/src/assets/congreso-computacion.jpg" alt="Congreso de Ciencias Computacionales"
-                class="event-image" />
-              <ion-card-header>
-                <ion-badge class="category-badge">Académico</ion-badge>
-                <ion-card-title>Congreso de Ciencias Computacionales</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <p>Evento académico para estudiantes de computación.</p>
-                <div class="meta">
-                  <small class="text-muted">15 Nov 2023</small>
-                  <ion-badge color="success">Gratuito</ion-badge>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-
-          <ion-col size="12" size-md="4" class="mb-3">
-            <ion-card class="event-card">
-              <img src="/ModelosAnalisis/src/assets/danza-folklorica.jpg" alt="Festival de Danza Folklórica"
-                class="event-image" />
-              <ion-card-header>
-                <ion-badge color="success">Cultural</ion-badge>
-                <ion-card-title>Festival de Danza Folklórica</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <p>Presentación de grupos estudiantiles de danza.</p>
-                <div class="meta">
-                  <small class="text-muted">18 Nov 2023</small>
-                  <ion-badge color="warning">$50</ion-badge>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-
-          <ion-col size="12" size-md="4" class="mb-3">
-            <ion-card class="event-card">
-              <img src="/ModelosAnalisis/src/assets/torneo-futbol.jpg" alt="Torneo Interfacultades de Fútbol"
-                class="event-image" />
-              <ion-card-header>
-                <ion-badge color="tertiary">Deportivo</ion-badge>
-                <ion-card-title>Torneo Interfacultades de Fútbol</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <p>Competencia deportiva entre facultades.</p>
-                <div class="meta">
-                  <small class="text-muted">22 Nov 2023</small>
-                  <ion-badge color="success">Gratuito</ion-badge>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <!-- no se centra el boton verificar!-->
     </div>
-  </section>
 
-  <!-- Sección QR -->
-  <section class="py-5 qr-section" role="region" aria-label="Control de asistencia con QR">
+    <!-- Lista de eventos mejorada -->
     <ion-grid>
-      <ion-row class="ion-align-items-center">
-        <ion-col size="12" size-md="6">
-          <h3>Control de Asistencia con QR</h3>
-          <p>Al registrarte en un evento, recibirás un boleto digital con código QR único para el control de asistencia.
-          </p>
-          <ul>
-            <li>Registro instantáneo de asistencia</li>
-            <li>Válido solo para el evento específico</li>
-            <li>Enviado directamente a tu correo</li>
-          </ul>
+      <ion-row>
+        <!-- Evento 1 -->
+        <ion-col size="12" size-md="6" size-lg="4" class="mb-4">
+          <ion-card class="event-card featured-card">
+            <div class="card-image-container">
+              <img 
+                src="/ModelosAnalisis/src/assets/congreso-computacion.jpg" 
+                alt="Congreso de Ciencias Computacionales"
+                class="event-image"
+                (error)="handleImageError($event)" />
+              <div class="card-overlay">
+                <ion-badge class="event-category academic">Académico</ion-badge>
+                <div class="event-actions">
+                  <ion-button fill="clear" size="small" class="action-btn">
+                    <ion-icon name="heart-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </div>
+            </div>
+            
+            <ion-card-header>
+              <ion-card-title class="event-title">Congreso de Ciencias Computacionales</ion-card-title>
+              <div class="event-meta">
+                <div class="meta-item">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  <span>15 Nov 2023</span>
+                </div>
+                <div class="meta-item">
+                  <ion-icon name="time-outline"></ion-icon>
+                  <span>09:00 AM</span>
+                </div>
+                <div class="meta-item">
+                  <ion-icon name="location-outline"></ion-icon>
+                  <span>Auditorio Central</span>
+                </div>
+              </div>
+            </ion-card-header>
+            
+            <ion-card-content>
+              <p class="event-description">Evento académico para estudiantes de computación con ponentes internacionales y workshops especializados.</p>
+              
+              <div class="event-footer">
+                <ion-badge class="price-badge free">Gratuito</ion-badge>
+              </div>
+            </ion-card-content>
+          </ion-card>
         </ion-col>
-        <ion-col size="12" size-md="6" class="text-center">
-          <div class="qr-code" aria-hidden="true">
-            <ion-icon name="qr-code-outline"></ion-icon>
-          </div>
-          <p class="qr-description">Ejemplo de boleto digital QR</p>
+
+        <!-- Evento 2 -->
+        <ion-col size="12" size-md="6" size-lg="4" class="mb-4">
+          <ion-card class="event-card featured-card">
+            <div class="card-image-container">
+              <img 
+                src="/ModelosAnalisis/src/assets/danza-folklorica.jpg" 
+                alt="Festival de Danza Folklórica"
+                class="event-image"
+                (error)="handleImageError($event)" />
+              <div class="card-overlay">
+                <ion-badge class="event-category cultural">Cultural</ion-badge>
+                <div class="event-actions">
+                  <ion-button fill="clear" size="small" class="action-btn">
+                    <ion-icon name="heart-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </div>
+            </div>
+            
+            <ion-card-header>
+              <ion-card-title class="event-title">Festival de Danza Folklórica</ion-card-title>
+              <div class="event-meta">
+                <div class="meta-item">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  <span>18 Nov 2023</span>
+                </div>
+                <div class="meta-item">
+                  <ion-icon name="time-outline"></ion-icon>
+                  <span>06:00 PM</span>
+                </div>
+                <div class="meta-item">
+                  <ion-icon name="location-outline"></ion-icon>
+                  <span>Teatro Universitario</span>
+                </div>
+              </div>
+            </ion-card-header>
+            
+            <ion-card-content>
+              <p class="event-description">Presentación de grupos estudiantiles de danza folklórica de toda la república mexicana.</p>
+              
+              <div class="event-footer">
+                <ion-badge class="price-badge paid">$50 MXN</ion-badge>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <!-- Evento 3 -->
+        <ion-col size="12" size-md="6" size-lg="4" class="mb-4">
+          <ion-card class="event-card featured-card">
+            <div class="card-image-container">
+              <img 
+                src="/ModelosAnalisis/src/assets/torneo-futbol.jpg" 
+                alt="Torneo Interfacultades de Fútbol"
+                class="event-image"
+                (error)="handleImageError($event)" />
+              <div class="card-overlay">
+                <ion-badge class="event-category sports">Deportivo</ion-badge>
+                <div class="event-actions">
+                  <ion-button fill="clear" size="small" class="action-btn">
+                    <ion-icon name="heart-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </div>
+            </div>
+            
+            <ion-card-header>
+              <ion-card-title class="event-title">Torneo Interfacultades de Fútbol</ion-card-title>
+              <div class="event-meta">
+                <div class="meta-item">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  <span>22 Nov 2023</span>
+                </div>
+                <div class="meta-item">
+                  <ion-icon name="time-outline"></ion-icon>
+                  <span>04:00 PM</span>
+                </div>
+                <div class="meta-item">
+                  <ion-icon name="location-outline"></ion-icon>
+                  <span>Estadio Universitario</span>
+                </div>
+              </div>
+            </ion-card-header>
+            
+            <ion-card-content>
+              <p class="event-description">Competencia deportiva entre facultades. Gran final y premiación especial.</p>
+              
+              <div class="event-footer">
+                <ion-badge class="price-badge free">Gratuito</ion-badge>
+              </div>
+            </ion-card-content>
+          </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
+
+    <!-- Botón centrado -->
+  </div>
+</section>
+
+  <!-- Sección QR Mejorada -->
+  <section class="py-5 qr-section" role="region" aria-label="Control de asistencia con QR">
+    <div class="container-ion">
+      <div class="qr-content">
+        <ion-grid>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="12" size-md="6">
+              <div class="qr-text-content">
+                <div class="section-header">
+                  <h2 class="section-title-qr">Control de Asistencia con <span class="highlight">QR</span></h2>
+                  <p class="section-subtitle">Sistema moderno y eficiente para la gestión de eventos</p>
+                </div>
+                
+                <div class="qr-features">
+                  <div class="feature-item">
+                    <div class="feature-icon">
+                      <ion-icon name="flash-outline"></ion-icon>
+                    </div>
+                    <div class="feature-text">
+                      <h4>Registro Instantáneo</h4>
+                      <p>Escaneo rápido y registro inmediato de asistencia</p>
+                    </div>
+                  </div>
+                  
+                  <div class="feature-item">
+                    <div class="feature-icon">
+                      <ion-icon name="lock-closed-outline"></ion-icon>
+                    </div>
+                    <div class="feature-text">
+                      <h4>Seguro y Único</h4>
+                      <p>Código QR específico para cada evento y asistente</p>
+                    </div>
+                  </div>
+                  
+                  <div class="feature-item">
+                    <div class="feature-icon">
+                      <ion-icon name="mail-outline"></ion-icon>
+                    </div>
+                    <div class="feature-text">
+                      <h4>Envío Inmediato</h4>
+                      <p>Recibe tu boleto digital directamente en tu correo</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="qr-cta">
+                  <ion-button fill="solid" size="large" class="qr-demo-btn">
+                    <ion-icon name="play-outline" slot="start"></ion-icon>
+                    Ver Demo
+                  </ion-button>
+                </div>
+              </div>
+            </ion-col>
+
+            <ion-col size="12" size-md="6" class="text-center">
+              <div class="qr-display">
+                <div class="qr-card">
+                  <div class="qr-header">
+                    <div class="event-info">
+                      <h4>Festival de Danza</h4>
+                      <p>18 Nov 2023 • 18:00</p>
+                    </div>
+                    <div class="uanl-logo">
+                      <div class="logo-placeholder">UANL</div>
+                    </div>
+                  </div>
+                  
+                  <div class="qr-code-container">
+                    <div class="qr-code">
+                      <ion-icon name="qr-code"></ion-icon>
+                    </div>
+                    <div class="qr-frame"></div>
+                  </div>
+                  
+                  <div class="qr-footer">
+                    <div class="ticket-info">
+                      <p class="ticket-number">#TKT-2023-001</p>
+                      <p class="attendee-name">Juan Pérez</p>
+                    </div>
+                    <div class="valid-badge">
+                      <ion-icon name="checkmark-circle"></ion-icon>
+                      <span>Válido</span>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
   </section>
 
   <!-- Footer -->
