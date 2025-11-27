@@ -1,0 +1,285 @@
+:host {
+  --uanl-blue: #003366;
+  --uanl-gold: #ffcc00da;
+  --uanl-light-blue: #00509e;
+  --background-light: #ffffff;
+  --background-dark: #1a1a1a;
+  --card-light: #ffffff;
+  --card-dark: #2d2d2d;
+  --text-light: #333333;
+  --text-dark: #ffffff;
+  --border-light: #e9ecef;
+  --border-dark: #444444;
+}
+
+.login-content {
+  --background: linear-gradient(135deg, var(--uanl-blue) 0%, var(--uanl-light-blue) 100%);
+  
+  @media (prefers-color-scheme: dark) {
+    --background: linear-gradient(135deg, #002244 0%, #003366 100%);
+  }
+  
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1rem;
+  }
+
+  .login-card {
+    background: var(--card-light);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    border: 2px solid rgba(255, 204, 0, 0.2);
+    
+    @media (prefers-color-scheme: dark) {
+      background: var(--card-dark);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  .uanl-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    
+    .uanl-logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--uanl-blue), var(--uanl-light-blue));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      
+      ion-icon {
+        font-size: 2.5rem;
+        color: white;
+      }
+    }
+
+    .login-title {
+      color: var(--uanl-blue);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+      
+      @media (prefers-color-scheme: dark) {
+        color: white;
+      }
+    }
+
+    .login-subtitle {
+      color: var(--uanl-light-blue);
+      font-size: 1rem;
+      opacity: 0.8;
+      
+      @media (prefers-color-scheme: dark) {
+        color: #cccccc;
+      }
+    }
+  }
+
+  .user-type-selector {
+    margin-bottom: 2rem;
+    
+    ion-segment {
+      --background: #f8f9fa;
+      border-radius: 12px;
+      padding: 4px;
+      
+      @media (prefers-color-scheme: dark) {
+        --background: #3a3a3a;
+      }
+    }
+    
+    ion-segment-button {
+      --border-radius: 8px;
+      --color-checked: white;
+      --background-checked: var(--uanl-blue);
+      min-height: 40px;
+      
+      ion-label {
+        font-weight: 500;
+        
+        @media (prefers-color-scheme: dark) {
+          color: #cccccc;
+        }
+      }
+    }
+  }
+
+  .login-form {
+    .form-item {
+      --background: transparent;
+      --border-color: var(--border-light);
+      --border-radius: 12px;
+      margin-bottom: 1rem;
+      
+      @media (prefers-color-scheme: dark) {
+        --border-color: var(--border-dark);
+        --color: white;
+      }
+      
+      ion-label {
+        color: var(--text-light);
+        font-weight: 500;
+        
+        @media (prefers-color-scheme: dark) {
+          color: white;
+        }
+      }
+      
+      ion-input {
+        --color: var(--text-light);
+        
+        @media (prefers-color-scheme: dark) {
+          --color: white;
+          --placeholder-color: #999999;
+        }
+      }
+    }
+
+    .remember-item {
+      --background: transparent;
+      margin: 1rem 0;
+      
+      ion-label {
+        color: var(--text-light);
+        
+        @media (prefers-color-scheme: dark) {
+          color: white;
+        }
+      }
+    }
+
+    .login-btn {
+      --border-radius: 12px;
+      --background: var(--uanl-blue);
+      --background-hover: var(--uanl-light-blue);
+      --background-activated: var(--uanl-light-blue);
+      height: 48px;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+  }
+
+  .demo-credentials {
+    margin-top: 1.5rem;
+    
+    ion-item {
+      --background: transparent;
+      
+      @media (prefers-color-scheme: dark) {
+        --color: white;
+      }
+    }
+    
+    .credential-group {
+      margin-bottom: 1rem;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      strong {
+        color: var(--uanl-blue);
+        display: block;
+        margin-bottom: 0.25rem;
+        
+        @media (prefers-color-scheme: dark) {
+          color: var(--uanl-gold);
+        }
+      }
+      
+      p {
+        margin: 0;
+        font-family: monospace;
+        background: #f8f9fa;
+        padding: 0.5rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        color: #495057;
+        
+        @media (prefers-color-scheme: dark) {
+          background: #3a3a3a;
+          color: #cccccc;
+        }
+      }
+    }
+  }
+
+  .back-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    
+    ion-button {
+      --color: var(--uanl-light-blue);
+      font-size: 0.875rem;
+      
+      @media (prefers-color-scheme: dark) {
+        --color: #cccccc;
+      }
+    }
+  }
+}
+
+// Modo oscuro explícito para usuarios que lo prefieran
+@media (prefers-color-scheme: dark) {
+  .login-content {
+    .form-item {
+      ion-label[position="stacked"] {
+        color: #cccccc !important;
+      }
+    }
+    
+    .user-type-selector {
+      ion-segment-button {
+        --color: #cccccc;
+        
+        &[aria-selected="true"] {
+          --color: white;
+        }
+      }
+    }
+  }
+}
+
+// Asegurar que los textos sean legibles en ambos modos
+ion-item {
+  --color: var(--text-light);
+  
+  @media (prefers-color-scheme: dark) {
+    --color: white;
+  }
+}
+
+ion-label {
+  color: var(--text-light);
+  
+  @media (prefers-color-scheme: dark) {
+    color: white;
+  }
+}
+
+// Mejoras de accesibilidad
+@media (prefers-reduced-motion: reduce) {
+  .login-card {
+    transition: none;
+  }
+}
+
+// Soporte para alto contraste
+@media (prefers-contrast: high) {
+  .login-card {
+    border: 3px solid var(--uanl-blue);
+  }
+  
+  .uanl-logo {
+    border: 2px solid white;
+  }
+}

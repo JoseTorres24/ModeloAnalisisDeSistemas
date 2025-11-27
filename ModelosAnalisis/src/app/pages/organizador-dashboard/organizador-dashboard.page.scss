@@ -1,0 +1,712 @@
+/* organizador-dashboard.page.scss */
+:host {
+  --uanl-blanco: #ffffff;
+  --uanl-blue: #003366;
+  --uanl-gold: #ffcc00da;
+  --uanl-light-blue: #00509e;
+  --uanl-black: #000000;
+  display: block;
+}
+
+.dashboard-content {
+  --background: #f5f7fa;
+}
+
+.dashboard-container {
+  min-height: 100vh;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(rgba(0,51,102,0.9), rgba(0,51,102,0.95));
+  color: #fff;
+  padding: 2rem 1rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--uanl-blue), var(--uanl-gold), var(--uanl-blue));
+}
+
+.hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 1.125rem;
+  margin-bottom: 0;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+/* Main Layout */
+.main-layout {
+  display: flex;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-card {
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+  border: none;
+  margin: 0;
+  background: white;
+}
+
+.stat-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(0, 51, 102, 0.2);
+}
+
+.stat-card ion-card-content {
+  padding: 2rem;
+  text-align: center;
+}
+
+.stat-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, var(--uanl-blue), var(--uanl-light-blue));
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+
+.stat-card:hover .stat-icon-wrapper {
+  transform: scale(1.1);
+  background: linear-gradient(135deg, var(--uanl-light-blue), var(--uanl-blue));
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  color: #fff;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--uanl-blue);
+  margin: 0 0 0.5rem 0;
+  line-height: 1;
+}
+
+.stat-label {
+  color: #6c757d;
+  margin: 0;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Events Card */
+.events-card {
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  margin: 0;
+  background: white;
+  
+  ion-card-header {
+    padding: 1.5rem 1.5rem 0;
+    
+    ion-card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--uanl-blue);
+    }
+  }
+  
+  ion-card-content {
+    padding: 1rem 1.5rem 1.5rem;
+  }
+}
+
+/* Table Styles */
+.table-container {
+  overflow-x: auto;
+  border-radius: 12px;
+  background: var(--gray-light);
+  padding: 1px;
+}
+
+.events-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  
+  th {
+    background: var(--uanl-blue);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: white;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    &:first-child {
+      border-radius: 12px 0 0 0;
+    }
+    
+    &:last-child {
+      border-radius: 0 12px 0 0;
+    }
+  }
+  
+  td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--gray-medium);
+    vertical-align: middle;
+  }
+  
+  tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .event-name {
+    font-weight: 600;
+    color: var(--uanl-blue);
+  }
+  
+  .event-date {
+    color: var(--gray-dark);
+    font-weight: 500;
+  }
+  
+  .event-attendees {
+    text-align: center;
+    font-weight: 600;
+    color: var(--uanl-blue);
+  }
+}
+
+.status-badge {
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  
+  &.status-approved {
+    background: #10dc60;
+    color: white;
+  }
+  
+  &.status-pending {
+    background: var(--uanl-gold);
+    color: #000;
+  }
+  
+  &.status-rejected {
+    background: #dc3545;
+    color: white;
+  }
+}
+
+/* Sidebar */
+.actions-sidebar {
+  width: 320px;
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  height: fit-content;
+  position: sticky;
+  top: 2rem;
+  
+  .sidebar-title {
+    font-weight: 700;
+    color: var(--uanl-blue);
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--gray-medium);
+    font-size: 1.25rem;
+  }
+}
+
+.action-btn {
+  margin-bottom: 1rem;
+  --border-radius: 15px;
+  --padding-top: 1rem;
+  --padding-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  
+  &.primary {
+    --background: var(--uanl-blue);
+    --background-hover: var(--uanl-light-blue);
+  }
+  
+  &.secondary {
+    --background: #6c757d;
+    --background-hover: #5a6268;
+  }
+  
+  &.warning {
+    --background: var(--uanl-gold);
+    --background-hover: #ffd700;
+    color: #000;
+  }
+}
+
+/* Modal Styles */
+.custom-modal {
+  --width: 90%;
+  --max-width: 800px;
+  --border-radius: 20px;
+  --box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+}
+
+.modal-content {
+  --padding-start: 2rem;
+  --padding-end: 2rem;
+  --padding-top: 1.5rem;
+  --padding-bottom: 2rem;
+}
+
+ion-modal ion-toolbar {
+  --background: var(--uanl-blue);
+  --color: white;
+  
+  ion-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
+}
+
+.modal-close-btn {
+  --color: white;
+  --background-hover: rgba(255, 255, 255, 0.1);
+}
+
+/* Form Styles */
+.event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-section {
+  .section-title-qr {
+    color: var(--uanl-blue);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--gray-medium);
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-item {
+  --border-radius: 12px;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  margin-bottom: 0;
+  
+  ion-label[position="stacked"] {
+    font-weight: 600;
+    color: var(--uanl-blue);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  ion-input, ion-select, ion-textarea {
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+    --padding-top: 0.75rem;
+    --padding-bottom: 0.75rem;
+    --background: var(--gray-light);
+    --border-radius: 8px;
+    font-size: 0.95rem;
+  }
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.checkbox-item {
+  --border-radius: 8px;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --background: var(--gray-light);
+  border-radius: 8px;
+  padding: 0.5rem;
+  
+  ion-checkbox {
+    --border-radius: 4px;
+    --checkmark-color: white;
+    --background-checked: var(--uanl-blue);
+    --border-color-checked: var(--uanl-blue);
+  }
+  
+  ion-label {
+    font-size: 0.9rem;
+    color: #444;
+    line-height: 1.4;
+  }
+}
+
+.modal-actions {
+  margin-top: 1rem;
+}
+
+.submit-btn {
+  --background: var(--uanl-blue);
+  --background-hover: var(--uanl-light-blue);
+  --border-radius: 12px;
+  --padding-top: 1rem;
+  --padding-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Reports Modal */
+.reports-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.report-option {
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin: 0;
+  cursor: pointer;
+  background: white;
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 51, 102, 0.15);
+  }
+  
+  ion-card-content {
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+}
+
+.report-icon-wrapper {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, var(--uanl-blue), var(--uanl-light-blue));
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+  
+  ion-icon {
+    font-size: 2rem;
+    color: white;
+  }
+}
+
+.report-option:hover .report-icon-wrapper {
+  transform: scale(1.1);
+  background: linear-gradient(135deg, var(--uanl-light-blue), var(--uanl-blue));
+}
+
+.report-option h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--uanl-blue);
+  margin: 0 0 0.75rem 0;
+}
+
+.report-option p {
+  color: #6c757d;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Button Styles */
+.modern-btn {
+  --border-radius: 12px;
+  --padding-start: 1.5rem;
+  --padding-end: 1.5rem;
+  --padding-top: 1rem;
+  --padding-bottom: 1rem;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 51, 102, 0.3);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .main-layout {
+    flex-direction: column;
+  }
+  
+  .actions-sidebar {
+    width: 100%;
+    position: static;
+    order: -1;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 1.5rem 1rem;
+  }
+  
+  .hero-title {
+    font-size: 1.75rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .main-layout {
+    padding: 1.5rem 1rem;
+    gap: 1.5rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .reports-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .custom-modal {
+    --width: 95%;
+  }
+  
+  .modal-content {
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+  }
+  
+  .events-table {
+    font-size: 0.875rem;
+    
+    th, td {
+      padding: 0.75rem 0.5rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.5rem;
+  }
+  
+  .stat-card ion-card-content {
+    padding: 1.5rem;
+  }
+  
+  .stat-value {
+    font-size: 2rem;
+  }
+  
+  .stat-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    
+    .stat-icon {
+      font-size: 2rem;
+    }
+  }
+}
+
+
+/* Estilos adicionales para iconos */
+.title-icon {
+  margin-right: 0.5rem;
+  font-size: 1.2em;
+  color: var(--uanl-blue);
+}
+
+.sidebar-icon {
+  margin-right: 0.5rem;
+  font-size: 1.1em;
+  color: var(--uanl-gold);
+}
+
+.modal-title-icon {
+  margin-right: 0.5rem;
+  font-size: 1.2em;
+}
+
+.label-icon {
+  margin-right: 0.5rem;
+  font-size: 0.9em;
+  color: var(--uanl-blue);
+}
+
+.checkbox-icon {
+  margin-right: 0.5rem;
+  font-size: 0.9em;
+  color: var(--uanl-blue);
+}
+
+.badge-icon {
+  margin-right: 0.25rem;
+  font-size: 0.8em;
+}
+
+.event-icon {
+  margin-right: 0.5rem;
+  font-size: 0.9em;
+  color: var(--uanl-blue);
+}
+
+.stat-trend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  
+  ion-icon {
+    margin-right: 0.25rem;
+  }
+  
+  .trend-up {
+    color: #10dc60;
+  }
+  
+  .trend-success {
+    color: var(--uanl-blue);
+  }
+}
+
+.sidebar-info {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 51, 102, 0.05);
+  padding: 1rem;
+  border-radius: 12px;
+  margin-top: 1rem;
+  
+  .info-icon {
+    margin-right: 0.5rem;
+    color: var(--uanl-blue);
+    font-size: 1.2rem;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--uanl-blue);
+    font-weight: 500;
+  }
+}
+
+.report-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: rgba(0, 51, 102, 0.1);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--uanl-blue);
+  
+  .download-icon {
+    margin-right: 0.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* Mejora para los iconos en la tabla */
+.events-table th ion-icon {
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.events-table td ion-icon {
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+  vertical-align: middle;
+  color: var(--uanl-blue);
+}

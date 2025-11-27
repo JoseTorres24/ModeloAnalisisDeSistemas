@@ -1,0 +1,78 @@
+<ion-content class="login-content">
+  <div class="login-container">
+    <div class="login-card">
+      <!-- Header UANL -->
+      <div class="uanl-header">
+        <div class="uanl-logo">
+          <ion-icon name="school-outline"></ion-icon>
+        </div>
+        <h1 class="login-title">Vinculación UANL</h1>
+        <p class="login-subtitle">Acceso Administrativo</p>
+      </div>
+
+      <!-- Selector de Tipo de Usuario -->
+      <ion-segment [(ngModel)]="userType" class="user-type-selector">
+        <ion-segment-button value="admin">
+          <ion-label>Administrador</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="organizador">
+          <ion-label>Organizador</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <!-- Formulario -->
+      <form class="login-form">
+        <ion-item class="form-item">
+          <ion-label position="stacked">Correo Electrónico</ion-label>
+          <ion-input type="email" placeholder="usuario@uanl.edu.mx"></ion-input>
+        </ion-item>
+
+        <ion-item class="form-item">
+          <ion-label position="stacked">Contraseña</ion-label>
+          <ion-input type="password" placeholder="Ingresa tu contraseña"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none" class="remember-item">
+          <ion-checkbox slot="start"></ion-checkbox>
+          <ion-label>Recordar sesión</ion-label>
+        </ion-item>
+
+        <ion-button expand="block" class="login-btn">
+          <ion-icon 
+            [name]="userType === 'admin' ? 'shield-checkmark-outline' : 'people-outline'" 
+            slot="start">
+          </ion-icon>
+          {{ userType === 'admin' ? 'Acceder como Administrador' : 'Acceder como Organizador' }}
+        </ion-button>
+      </form>
+
+      <!-- Credenciales de Prueba -->
+      <ion-accordion-group class="demo-credentials">
+        <ion-accordion value="demo">
+          <ion-item slot="header">
+            <ion-label>Credenciales de Prueba</ion-label>
+            <ion-icon name="information-circle-outline" slot="end"></ion-icon>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <div class="credential-group">
+              <strong>Administrador:</strong>
+              <p>admin@uanl.edu.mx / admin123</p>
+            </div>
+            <div class="credential-group">
+              <strong>Organizador FCFM:</strong>
+              <p>org.fcfm@uanl.edu.mx / org123</p>
+            </div>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+
+      <!-- Enlace de regreso -->
+      <div class="back-link">
+        <ion-button fill="clear" routerLink="/todos-eventos">
+          <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+          Volver al Catálogo de Eventos
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

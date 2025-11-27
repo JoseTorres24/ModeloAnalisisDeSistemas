@@ -1,0 +1,237 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Panel de Administración - Vinculación UANL</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        Salir
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="dashboard-container">
+    <!-- Header Info -->
+    <div class="dashboard-header">
+      <div class="user-info">
+        <ion-avatar class="user-avatar">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+        </ion-avatar>
+        <div class="user-details">
+          <h2>Administrador General</h2>
+          <p>Vinculación UANL - Control Total del Sistema</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <ion-button fill="outline" size="small">
+          <ion-icon name="download-outline" slot="start"></ion-icon>
+          Exportar
+        </ion-button>
+        <ion-button fill="outline" size="small" routerLink="/todos-eventos">
+          <ion-icon name="eye-outline" slot="start"></ion-icon>
+          Ver Catálogo
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Estadísticas Globales -->
+    <div class="stats-grid">
+      <ion-card class="stat-card">
+        <ion-card-header>
+          <div class="stat-header">
+            <ion-card-title class="stat-number">156</ion-card-title>
+            <ion-icon name="calendar-outline" color="primary"></ion-icon>
+          </div>
+          <ion-card-subtitle>Eventos Activos</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <small class="text-success">+24 este mes</small>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="stat-card">
+        <ion-card-header>
+          <div class="stat-header">
+            <ion-card-title class="stat-number">12,845</ion-card-title>
+            <ion-icon name="people-outline" color="success"></ion-icon>
+          </div>
+          <ion-card-subtitle>Total Asistentes</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <small class="text-muted">78% capacidad promedio</small>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="stat-card">
+        <ion-card-header>
+          <div class="stat-header">
+            <ion-card-title class="stat-number">$186,520</ion-card-title>
+            <ion-icon name="cash-outline" color="warning"></ion-icon>
+          </div>
+          <ion-card-subtitle>Ingresos Totales</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <small class="text-muted">45 eventos pagados</small>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="stat-card">
+        <ion-card-header>
+          <div class="stat-header">
+            <ion-card-title class="stat-number">42</ion-card-title>
+            <ion-icon name="business-outline" color="tertiary"></ion-icon>
+          </div>
+          <ion-card-subtitle>Dependencias Activas</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <small class="text-muted">32 facultades, 10 centros</small>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Secciones Principales -->
+    <div class="sections-grid">
+      <!-- Eventos Pendientes de Aprobación -->
+      <ion-card class="section-card">
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="time-outline" color="warning"></ion-icon>
+            Eventos Pendientes de Aprobación
+          </ion-card-title>
+          <ion-badge color="danger">12 pendientes</ion-badge>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="pending-events">
+            <ion-item *ngFor="let event of pendingEvents" class="pending-item">
+              <ion-label>
+                <h3>{{ event.titulo }}</h3>
+                <p>{{ event.dependencia }} • {{ event.fecha }}</p>
+                <p class="event-description">{{ event.descripcion }}</p>
+              </ion-label>
+              <div class="action-buttons" slot="end">
+                <ion-button fill="clear" color="success" size="small">
+                  <ion-icon name="checkmark-circle-outline"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" color="medium" size="small">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" color="danger" size="small">
+                  <ion-icon name="close-circle-outline"></ion-icon>
+                </ion-button>
+              </div>
+            </ion-item>
+          </div>
+          <ion-button expand="block" fill="outline" class="mt-3">
+            <ion-icon name="list-outline" slot="start"></ion-icon>
+            Ver Todos los Pendientes
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Gestión de Organizadores -->
+      <ion-card class="section-card">
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="people-circle-outline" color="primary"></ion-icon>
+            Gestión de Organizadores
+          </ion-card-title>
+          <ion-badge color="success">{{ organizadores.length }} activos</ion-badge>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="organizadores-list">
+            <ion-item *ngFor="let org of organizadores" button class="org-item">
+              <ion-avatar slot="start">
+                <ion-icon name="person-circle-outline"></ion-icon>
+              </ion-avatar>
+              <ion-label>
+                <h3>{{ org.nombre }}</h3>
+                <p>{{ org.dependencia }} • {{ org.email }}</p>
+              </ion-label>
+              <ion-badge slot="end" [color]="org.activo ? 'success' : 'warning'">
+                {{ org.activo ? 'Activo' : 'Inactivo' }}
+              </ion-badge>
+            </ion-item>
+          </div>
+          <ion-button expand="block" class="mt-3">
+            <ion-icon name="person-add-outline" slot="start"></ion-icon>
+            Crear Nuevo Organizador
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Estadísticas por Dependencia -->
+    <ion-card class="stats-section">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="trending-up-outline" color="primary"></ion-icon>
+          Top Dependencias - Eventos
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="dependencias-stats">
+          <ion-item *ngFor="let dep of topDependencias" class="dep-item">
+            <ion-label>
+              <h3>{{ dep.nombre }}</h3>
+              <p>{{ dep.eventos }} eventos • {{ dep.asistentes }} asistentes</p>
+            </ion-label>
+            <div class="dep-stats" slot="end">
+              <ion-badge color="primary">{{ dep.eventos }} eventos</ion-badge>
+              <small class="text-muted">${{ dep.ingresos | number }}</small>
+            </div>
+          </ion-item>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Actividad Reciente del Sistema -->
+    <ion-card class="activity-section">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="pulse-outline" color="medium"></ion-icon>
+          Actividad Reciente del Sistema
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let activity of recentActivity" class="activity-item">
+            <ion-icon [name]="activity.icon" [color]="activity.color" slot="start"></ion-icon>
+            <ion-label>
+              <h3>{{ activity.action }}</h3>
+              <p>{{ activity.details }}</p>
+              <small>{{ activity.time }}</small>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Acciones Rápidas -->
+    <ion-card class="quick-actions">
+      <ion-card-header>
+        <ion-card-title>Acciones Administrativas</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="actions-grid">
+          <ion-button expand="block" class="action-btn">
+            <ion-icon name="settings-outline" slot="start"></ion-icon>
+            Configuración Sistema
+          </ion-button>
+          <ion-button expand="block" fill="outline" class="action-btn">
+            <ion-icon name="document-text-outline" slot="start"></ion-icon>
+            Reportes Gerenciales
+          </ion-button>
+          <ion-button expand="block" fill="outline" class="action-btn">
+            <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+            Auditoría Sistema
+          </ion-button>
+          <ion-button expand="block" fill="outline" class="action-btn">
+            <ion-icon name="notifications-outline" slot="start"></ion-icon>
+            Notificaciones Globales
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

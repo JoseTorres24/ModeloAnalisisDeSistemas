@@ -1,0 +1,189 @@
+:host {
+  --uanl-blue: #003366;
+  --uanl-gold: #ffcc00da;
+  --uanl-light-blue: #00509e;
+}
+
+.login-content {
+  --background: linear-gradient(135deg, var(--uanl-blue) 0%, var(--uanl-light-blue) 100%);
+  
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1rem;
+  }
+
+  .login-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    border: 2px solid rgba(255, 204, 0, 0.2);
+  }
+
+  .uanl-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    
+    .uanl-logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--uanl-blue), var(--uanl-light-blue));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      
+      ion-icon {
+        font-size: 2.5rem;
+        color: white;
+      }
+    }
+
+    .login-title {
+      color: var(--uanl-blue);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    .login-subtitle {
+      color: var(--uanl-light-blue);
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+  }
+
+  .user-type-selector {
+    margin-bottom: 2rem;
+    
+    ion-segment {
+      --background: #f8f9fa;
+      border-radius: 12px;
+      padding: 4px;
+    }
+    
+    ion-segment-button {
+      --border-radius: 8px;
+      --color-checked: white;
+      min-height: 40px;
+    }
+  }
+
+  .login-form {
+    .form-item {
+      --background: transparent;
+      --border-color: #e9ecef;
+      --border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .remember-item {
+      --background: transparent;
+      margin: 1rem 0;
+    }
+
+    .login-btn {
+      --border-radius: 12px;
+      --background: var(--uanl-blue);
+      --background-hover: var(--uanl-light-blue);
+      --background-activated: var(--uanl-light-blue);
+      height: 48px;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+  }
+
+  .demo-credentials {
+    margin-top: 1.5rem;
+    
+    .credential-group {
+      margin-bottom: 1rem;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      strong {
+        color: var(--uanl-blue);
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+      
+      p {
+        margin: 0;
+        font-family: monospace;
+        background: #f8f9fa;
+        padding: 0.5rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        color: #495057;
+      }
+    }
+  }
+
+  .back-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    
+    ion-button {
+      --color: var(--uanl-light-blue);
+      font-size: 0.875rem;
+    }
+  }
+}
+
+/* Estilos para mejorar el espaciado en formularios Ionic */
+.login-form {
+  margin: 20px 0;
+}
+
+.form-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  margin-bottom: 24px;
+}
+
+/* Mejorar espaciado del label */
+.form-item ion-label {
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+  transform: none !important;
+}
+
+/* Mejorar apariencia del input */
+.form-item ion-input {
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* Efectos de focus para mejor UX */
+.form-item ion-input:focus-within {
+  border-color: var(--ion-color-primary, #3880ff);
+  box-shadow: 0 0 0 2px rgba(56, 128, 255, 0.2);
+}
+
+/* Espaciado adicional para el placeholder */
+.form-item ion-input::placeholder {
+  color: #999;
+}
+
+/* Estilo para cuando hay error (opcional) */
+.form-item.error ion-label {
+  color: var(--ion-color-danger, #eb445a);
+}
+
+.form-item.error ion-input {
+  border-color: var(--ion-color-danger, #eb445a);
+}
